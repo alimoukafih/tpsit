@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Prima pagina con css</title>
+
+<style>
+    body{
+         background-color:#9c8e57;
+    }
+     #scatola1{
+        padding: 5px;
+        margin:10px;
+        height: 200px;
+        width: 200px;
+        border: 2px solid black;
+        background-color: rgb(129, 157, 250);
+     }
+     #scatola2{
+        margin:10px;
+        height: 200px;
+        width: 200px;
+        border: 2px solid black;
+        background-color: rgb(129, 157, 250);
+     }
+    #scatola3{
+        padding: 5px;
+        margin:10px;
+        height: 200px;
+        width: 200px;
+        border: 2px solid black;
+        background-color: rgb(129, 157, 250);
+     }
+     #scatola4{
+        margin:10px;
+        height: 200px;
+        width: 200px;
+        border: 2px solid black;
+        background-color: rgb(129, 157, 250);
+    }
+     #scatola4{
+        margin:10px;
+        height: 200px;
+        width: 200px;
+        border: 2px solid black;
+        background-color: rgb(129, 157, 250);
+    }
+  #scatola5{
+        margin:10px;
+        height: 200px;
+        width: 200px;
+        border: 2px solid black;
+        background-color: rgb(129, 157, 250);
+    }
+
+
+</style>
+
+
+</head>
+<body>
+    <h1>Primo esercizio con CSS</h1>
+<div id="scatola1">
+    …quando la pioggia, distendendo le sue immense strisce, 
+imita le sbarre d’un grande carcere,
+e un popolo muto d’infami ragni
+tende le sue reti in fondo ai nostri cervelli…
+</div>
+
+<div id="scatola2">
+Cosa farai, Dio, se muoio?
+Sono la tua brocca (e se m’infrango?).
+Sono la tua acqua (e se marcisco?).
+Sono la tua veste e il tuo lavoro;
+perderesti assieme a me il tuo stesso senso.
+</div>
+
+<div id="scatola3">
+Pace non trovo e non ho da far guerra 
+e temo, e spero; e ardo e sono un ghiaccio;
+e volo sopra ‘l cielo, e giaccio in terra;
+e nulla stringo, e tutto il mondo abbraccio.
+</div>
+
+<div id="scatola4">
+…Io son come uno specchio rassegnato
+che riflette ogni cosa per la via.
+In me stesso non guardo perché nulla
+vi troverei…
+E, venuta la sera, nel mio letto
+mi stendo lungo come in una bara.
+</div>
+
+<div id="scatola5">
+ogni  5  secondi   cannoni  da    assedio  sventrare 
+spazio  con  un  accordo  tam-tuuumb
+ammutinamento  di   500    echi   per   azzannarlo
+sminuzzarlo   sparpagliarlo   all´infinito
+</div>
+
+
+
+
+</body>
+</html>
