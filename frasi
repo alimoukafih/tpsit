@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Prima pagina con css</title>
+
+<style>
+    body{
+         background-color:#9c8e57;
+    }
+     #scatola1{
+        padding: 5px;
+        margin:10px;
+        height: 200px;
+        width: 200px;
+        border: 2px solid black;
+        background-color: rgb(129, 157, 250);
+     }
+     #scatola2{
+        margin:10px;
+        height: 200px;
+        width: 200px;
+        border: 2px solid black;
+        background-color: rgb(129, 157, 250);
+     }
+    #scatola3{
+        padding: 5px;
+        margin:10px;
+        height: 200px;
+        width: 200px;
+        border: 2px solid black;
+        background-color: rgb(129, 157, 250);
+     }
+     #scatola4{
+        margin:10px;
+        height: 200px;
+        width: 200px;
+        border: 2px solid black;
+        background-color: rgb(129, 157, 250);
+    }
+     #scatola4{
+        margin:10px;
+        height: 200px;
+        width: 200px;
+        border: 2px solid black;
+        background-color: rgb(129, 157, 250);
+    }
+  #scatola5{
+        margin:10px;
+        height: 200px;
+        width: 200px;
+        border: 2px solid black;
+        background-color: rgb(129, 157, 250);
+    }
+
+
+</style>
+
+
+</head>
+<body>
+    <h1>Primo esercizio con CSS</h1>
+<div id="scatola1">
+   "Ogni stella che scopriamo è una finestra aperta sull'infinito,
+un segno che, nonostante la vastità dell'universo,
+il nostro desiderio di comprendere rimane eterno."
+</div>
+
+<div id="scatola2">
+"Ogni pianeta trovato fuori dal nostro sistema solare
+è un sogno che si risveglia, un mondo nascosto che ci
+invita a cercare risposte in un cielo lontano."
+</div>
+
+<div id="scatola3">
+"Quando gli astronomi scrutano il cielo,
+non cercano solo nuove galassie, ma anche frammenti di noi stessi,
+pezzi di un tutto che ancora non comprendiamo."
+</div>
+
+<div id="scatola4">
+"La scoperta di un nuovo esopianeta ci ricorda che,
+nell'immensità dell'universo,
+anche l'incredibile solitudine della Terra è un miracolo da custodire."
+</div>
+
+<div id="scatola5">
+"Ogni volta che una cometa attraversa il nostro cielo,
+è come un messaggio che ci invita a riflettere sulla bellezza
+e sulla fragilità di ciò che ci circonda, nella vastità dell'universo."
+</div>
+
+
+
+
+</body>
+</html>
