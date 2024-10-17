@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Prima pagina con css</title>
+
+<style>
+    body{
+         background-color:orange;
+    }
+     #scatola1{
+        padding: 5px;
+        margin:10px;
+        height: 400px;
+        width: 400px;
+        border: 2px solid black;
+        background-color: rgb(129, 157, 250);
+     }
+     #scatola2{
+        margin:10px;
+        height: 400px;
+        width: 400px;
+        border: 2px solid black;
+        background-color: rgb(129, 157, 250);
+     }
+   #scatola3{
+        padding: 5px;
+        margin:10px;
+        height: 400px;
+        width: 400px;
+        border: 2px solid black;
+        background-color: rgb(129, 157, 250);
+     }
+     #scatola4{
+        margin:10px;
+        height: 400px;
+        width: 400px;
+        border: 2px solid black;
+        background-color: rgb(129, 157, 250);
+     }
+  #scatola5{
+        padding: 5px;
+        margin:10px;
+        height: 400px;
+        width: 400px;
+        border: 2px solid black;
+        background-color: rgb(129, 157, 250);
+     }
+     #scatola6{
+        margin:10px;
+        height: 400px;
+        width: 400px;
+        border: 2px solid black;
+        background-color: rgb(129, 157, 250);
+     }
+   #scatola7{
+        padding: 5px;
+        margin:10px;
+        height: 400px;
+        width: 400px;
+        border: 2px solid black;
+        background-color: rgb(129, 157, 250);
+     }
+  #scatola8{
+        padding: 5px;
+        margin:10px;
+        height: 400px;
+        width: 400px;
+        border: 2px solid black;
+        background-color: rgb(129, 157, 250);
+     }
+     #scatola9{
+        margin:10px;
+        height: 400px;
+        width: 400px;
+        border: 2px solid black;
+        background-color: rgb(129, 157, 250);
+     }
+   #scatola10{
+        padding: 5px;
+        margin:10px;
+        height: 400px;
+        width: 400px;
+        border: 2px solid black;
+        background-color: rgb(129, 157, 250);
+     }
+
+
+</style>
+
+
+</head>
+<body>
+    <h1>esercizio con i DIV annidati</h1>
+<div id="scatola1">
+Circa 370 milioni di dollari
+Il lancio inaugurale del razzo Ariane 5 dell'Agenzia Spaziale Europea fallì a causa di un bug nel software. Il sistema di navigazione riutilizzava codice dall'Ariane 4, che non era stato adattato ai cambiamenti delle prestazioni del nuovo razzo. Ciò provocò un errore di overflow in una conversione di un numero a virgola mobile. Il razzo deviò dalla sua rotta e fu distrutto.
+Perdita di un razzo da 370 milioni di dollari e di carichi utili scientifici di alto valore.
+ <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Ariane42P_rocket.png/225px-Ariane42P_rocket.png"foto1.jpeg width="160">
+</div>
+
+<div id="scatola2">
+Circa 193 milioni di dollari
+Questo errore si verificò perché il software che controllava il sistema di navigazione del Mars Climate Orbiter utilizzava unità imperiali (libbre-forza secondi) invece di unità metriche (newton secondi). La sonda entrò nell'atmosfera di Marte troppo bassa e fu distrutta.
+Perdita della sonda spaziale e della missione.
+<img src="https://www.astrospace.it/wp-content/uploads/2022/09/Mars-Climate-Orbiter_0.jpg"foto2.jpeg width="200">
+   
+</div>
+
+<div id="scatola3">
+Circa 440 milioni di dollari in 45 minuti
+Knight Capital, una grande società di trading finanziario, installò un aggiornamento del software difettoso su uno dei suoi server. Questo software iniziò a fare milioni di operazioni di borsa errate, facendo crollare il prezzo delle azioni. L'azienda perse circa 440 milioni di dollari in meno di un'ora e fu successivamente acquisita.
+Perdita finanziaria enorme e fine dell'azienda come entità indipendente.
+<img src="https://cdn-images-1.medium.com/max/737/1*Y3F7dcxb3Wqatj5NpXG9PQ.jpeg"foto3.jpeg width="200">
+   
+</div>
+
+<div id="scatola4">
+Diverse vite umane
+Therac-25 era una macchina per la radioterapia utilizzata negli ospedali. A causa di bug nel software, in alcune circostanze la macchina somministrava dosi di radiazioni letali ai pazienti. Il bug si manifestava solo in determinate sequenze operative, quindi non fu scoperto subito.
+Almeno 5 persone morirono e molte altre subirono gravi lesioni a causa di sovraesposizione alle radiazioni.
+<img src="https://i.redd.it/5foqs9f4ez2d1.jpeg"foto4.jpeg width="200">
+   
+</div>
+
+<div id="scatola5">
+Perdita di vite e milioni di dollari
+Un errore di arrotondamento in un sistema di temporizzazione del software del Patriot Missile causò il fallimento dell'intercettazione di un missile Scud iracheno. Il missile colpì una caserma dell'esercito statunitense, uccidendo 28 soldati.
+Perdita di vite umane e di fiducia nella tecnologia di difesa.
+<img src="https://www.twz.com/wp-content/uploads/2024/01/04/3958317.jpg"foto5.jpeg width="200">
+   
+</div>
+
+<div id="scatola6">
+Circa 100 miliardi di dollari in preparazione e mitigazione
+Sebbene non ci sia stata una grande catastrofe, il "Millennium Bug" ha richiesto investimenti massicci per evitare il collasso dei sistemi informatici. Il bug era causato dal fatto che molti software utilizzavano solo le ultime due cifre dell'anno (es. '99 per 1999), il che poteva portare a malfunzionamenti passando all'anno 2000.
+Anche se il bug non causò gravi danni, il costo per la prevenzione fu enorme.
+<img src="https://ilmirino.it/wp-content/uploads/2020/01/Millennium-Bug-Fix-e1578421419194.jpg"foto6.jpeg width="200">
+   
+</div>
+
+<div id="scatola7">
+Circa 475 milioni di dollari
+Un bug nei processori Intel Pentium causava errori di calcolo nelle divisioni in virgola mobile. Questo difetto divenne un problema di pubbliche relazioni per Intel dopo che gli scienziati iniziarono a notare discrepanze nei loro calcoli. Intel alla fine dovette ritirare i processori difettosi e rimborsare i clienti.
+Costi enormi di sostituzione e danno alla reputazione di Intel.
+<img src="https://upload.wikimedia.org/wikipedia/it/9/9e/Intel-pentium-logo-new.jpg"foto7.jpeg width="200">
+   
+</div>
+
+<div id="scatola8">
+Perdita di un'auto
+Un aggiornamento del software del Tesla Model S causò il blocco dei freni a mano di alcune auto. In un caso, questo portò all'incendio e alla perdita completa di un'auto.
+Danni materiali e possibili rischi per la sicurezza.
+<img src="https://cdn.drivek.com/configurator-imgs/cars/it/Original/TESLA/MODEL-S/40585_BERLINA-5-PORTE/tesla-model-s-2021-font-side-1.jpg"foto8.jpeg width="200">
+   
+</div>
+
+<div id="scatola9">
+Decine di milioni di dollari
+Un aggiornamento software difettoso nel sistema di commutazione di AT&T portò a un blocco che durò circa 9 ore. Durante questo periodo, milioni di chiamate telefoniche furono interrotte negli Stati Uniti.
+Danno alla reputazione e perdite finanziarie per AT&T, oltre a disagio per milioni di utenti.
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5hGOHd3h04AG_2yWPC8xrGgZ5SDvsRy-FYA&s"foto9.jpeg width="200">
+   
+</div>
+
+<div id="scatola10">
+Oltre 20 miliardi di dollari, molte vite perse
+Il sistema MCAS (Maneuvering Characteristics Augmentation System) del Boeing 737 Max, progettato per correggere il comportamento di volo dell'aereo, aveva un bug che portava a una serie di incidenti aerei mortali. Questo errore portò alla perdita di controllo degli aerei in determinate situazioni, causando due incidenti fatali che uccisero 346 persone.
+La Boeing subì gravi perdite economiche, danni alla reputazione e costi enormi per riparare il software e certificare nuovamente il modello. L’aereo fu bloccato a terra per quasi due anni.
+<img src="https://theaircurrent.com/wp-content/uploads/2018/11/mcas-737-max-diagram-2.jpg"foto10.jpeg width="200">
+</div>
+
+
+
+
+</body>
+</html>
