@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+<style>
+    #linkutili{
+        background-color: rgb(231, 228, 228);
+        border:1px solid black
+
+    }
+</style>
+
+</head>
+<body>
+<div id="linkutili">
+
+
+    <p>
+        Il mio sito di riferimento è:
+       
+        <a href="https://www.nasa.gov/"&gt; lo spazio</a>
+   
+    </p>
+    <p>
+        Sito da dove imparo informazioni sullo sppazio
+        <a href="https://www.space.com/"&gt; sito di informazioni e aggiornamenti su eventi dello spazio.</a>
+    </p>
+
+</div>
