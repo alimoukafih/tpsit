@@ -7,20 +7,44 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-            text-align: center;
+            background: url('https://preview.redd.it/fw3pctfene911.jpg?auto=webp&s=2f3493737ea71349762defd5dc2c0587d6ec244e') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
         .box {
-            display: inline-block;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 8px;
             padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
             width: 300px;
+            text-align: center;
+        }
+        h2 {
+            color: lightblue; 
+            margin-bottom: 20px;
         }
         input, button {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid lightblue;
+            background-color: #333;
+            color: white;
+        }
+        button {
+            cursor: pointer;
+            background-color: lightblue;
+            color: black;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: lightblue;
         }
         .result {
             margin-top: 20px;
@@ -46,28 +70,21 @@
 
     <script>
         function calcolaDislivello() {
-            // Recupera i valori dagli input
             const partenza = parseFloat(document.getElementById('partenza').value);
             const pausa = parseFloat(document.getElementById('pausa').value);
             const arrivo = parseFloat(document.getElementById('arrivo').value);
 
-            // Verifica che tutti i campi siano compilati
+            // Verifica che tutti i campi siano validi
             if (isNaN(partenza) || isNaN(pausa) || isNaN(arrivo)) {
-                alert('Inserisci valori validi in tutti i campi!');
+                alert('Inserisci valori validi!');
                 return;
             }
 
-            // Calcola il dislivello
-            const dislivelloPartenzaPausa = Math.abs(pausa - partenza);
-            const dislivelloPausaArrivo = Math.abs(arrivo - pausa);
-            const dislivelloTotale = dislivelloPartenzaPausa + dislivelloPausaArrivo;
+            const dislivelloTotale = Math.abs(pausa - partenza) + Math.abs(arrivo - pausa);
 
             // Mostra il risultato
-            const resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = `
-                Dislivello Partenza - Pausa: ${dislivelloPartenzaPausa} m<br>
-                Dislivello Pausa - Arrivo: ${dislivelloPausaArrivo} m<br>
-                <strong>Dislivello Totale: ${dislivelloTotale} m</strong>
+            document.getElementById('result').innerHTML = `
+                <p>Dislivello Totale: <strong>${dislivelloTotale} m</strong></p>
             `;
         }
     </script>
