@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolatore Dislivello Trekking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        .box {
+            display: inline-block;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            width: 300px;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h2>Calcola Dislivello Trekking</h2>
+        
+        <!-- Input form -->
+        <input type="number" id="partenza" placeholder="Partenza (m)" required>
+        <input type="number" id="pausa" placeholder="Pausa (m)" required>
+        <input type="number" id="arrivo" placeholder="Arrivo (m)" required>
+
+        <button onclick="calcolaDislivello()">Calcola</button>
+
+        <!-- Risultato -->
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calcolaDislivello() {
+            // Recupera i valori dagli input
+            const partenza = parseFloat(document.getElementById('partenza').value);
+            const pausa = parseFloat(document.getElementById('pausa').value);
+            const arrivo = parseFloat(document.getElementById('arrivo').value);
+
+            // Verifica che tutti i campi siano compilati
+            if (isNaN(partenza) || isNaN(pausa) || isNaN(arrivo)) {
+                alert('Inserisci valori validi in tutti i campi!');
+                return;
+            }
+
+            // Calcola il dislivello
+            const dislivelloPartenzaPausa = Math.abs(pausa - partenza);
+            const dislivelloPausaArrivo = Math.abs(arrivo - pausa);
+            const dislivelloTotale = dislivelloPartenzaPausa + dislivelloPausaArrivo;
+
+            // Mostra il risultato
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                Dislivello Partenza - Pausa: ${dislivelloPartenzaPausa} m<br>
+                Dislivello Pausa - Arrivo: ${dislivelloPausaArrivo} m<br>
+                <strong>Dislivello Totale: ${dislivelloTotale} m</strong>
+            `;
+        }
+    </script>
+
+</body>
+</html>
