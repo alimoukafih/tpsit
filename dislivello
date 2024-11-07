@@ -20,15 +20,15 @@
             background-color: rgba(0, 0, 0, 0.6);
             border-radius: 8px;
             padding: 20px;
-            width: 300px;
+            width: 325px;
             text-align: center;
         }
         h2 {
             color: lightblue; 
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         input, button {
-            width: 100%;
+            width: 90%;
             padding: 10px;
             margin: 10px 0;
             font-size: 16px;
