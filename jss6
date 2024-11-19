@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown with Image</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Countdown Timer</h1>
+        
+        <!-- Countdown Display -->
+        <div id="countdownDisplay" class="countdown">
+            <p id="countdownNumber">3</p>
+        </div>
+        
+        <!-- Hidden Image -->
+        <div id="imageContainer" class="hidden">
+            <img src="https://via.placeholder.com/300" alt="Image" id="image">
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
