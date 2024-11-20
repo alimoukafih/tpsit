@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Gioco: Sasso, Carta, Forbice</h1>
+<h2>Genera un'immagine casuale</h2>
+<p>Fai clic sul pulsante per generare un numero casuale e visualizzare un'immagine:</p>
+
+<button onclick="mostraImmagine()">Genera Immagine</button>
+
+<p id="demo"></p>
+<img id="immagine" src="" alt="Immagine" style="display:none; width:200px; height:auto;"/>
+
+<script>
+function mostraImmagine() {
+    let numeroCasuale = Math.floor(Math.random() * 3) + 1;
+    let immagineSrc = "";
+
+    if (numeroCasuale === 1) {
+        immagineSrc = "https://www.cosepercrescere.it/wp-content/uploads/2016/04/faccia-di-sasso.jpg"; // Sasso
+    } else if (numeroCasuale === 2) {
+        immagineSrc = "https://img.freepik.com/foto-premium/pezzi-di-carta-strappata-texture-di-sfondo-con-copia-spazio-per-il-testo_34155-3919.jpg?semt=ais_hybrid"; // Carta
+    } else if (numeroCasuale === 3) {
+        immagineSrc = "https://robursrl.it/robur/wp-content/uploads/2017/07/forbice-multiuso-professionale-manico-nylon-00121671070.jpg"; // Forbice
+    }
+
+    document.getElementById("immagine").src = immagineSrc;
+    document.getElementById("immagine").style.display = "block";
+    document.getElementById("demo").innerHTML = "Numero casuale: " + numeroCasuale;
+}
+</script>
+
+</body>
+</html>
