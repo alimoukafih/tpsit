@@ -9,10 +9,31 @@
 <button onclick="mostraImmagine()">Genera Immagine</button>
 
 <p id="demo"></p>
+<p id="countdown" style="font-weight: bold;"></p>
 <img id="immagine" src="" alt="Immagine" style="display:none; width:200px; height:auto;"/>
 
 <script>
 function mostraImmagine() {
+    document.getElementById("demo").innerHTML = ""; // Pulisci il messaggio precedente
+    document.getElementById("immagine").style.display = "none"; // Nascondi l'immagine
+    let countdownElement = document.getElementById("countdown");
+    let countdown = 3; // 3 secondi
+
+   
+    countdownElement.innerHTML = "Countdown: " + countdown;
+
+    let countdownInterval = setInterval(function() {
+        countdown--;
+        countdownElement.innerHTML = "Countdown: " + countdown;
+
+        if (countdown <= 0) {
+            clearInterval(countdownInterval); // Ferma il countdown
+            mostraImmagineCasuale(); // Mostra l'immagine
+        }
+    }, 1000); // Aggiorna ogni secondo
+}
+
+function mostraImmagineCasuale() {
     let numeroCasuale = Math.floor(Math.random() * 3) + 1;
     let immagineSrc = "";
 
