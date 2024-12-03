@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morra Cinese</title>
+    <style>
+        #out2 {
+            font-size: large;
+            color: purple;
+        }
+        .image {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Gioco di Morra Cinese</h1>
+    <div>
+        <img src="https://www.cosepercrescere.it/wp-content/uploads/2016/04/faccia-di-sasso.jpg" alt="Sasso" class="image" onclick="gioca('sasso')">
+        <img src="https://img.freepik.com/foto-premium/un-pezzo-di-carta-strappato-e-strappato-da-un-pezzo-di-papel_34155-7017.jpg?semt=ais_hybrid" alt="Carta" class="image" onclick="gioca('carta')">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Schere_Gr_99.jpg" alt="Forbice" class="image" onclick="gioca('forbice')">
+    </div>
+
+    <p id="out1"></p>
+    <p id="out2"></p>
+    <p id="punteggio"></p>
+
+    <script>
+        let morra = ["sasso", "carta", "forbice"];
+        let punteggioGiocatore = 0;
+        let punteggioComputer = 0;
+
+        function gioca(sceltaGiocatore) {
+            let numeroCasuale = Math.floor(Math.random() * 3);
+            let sceltaComputer = morra[numeroCasuale];
+
+            document.getElementById("out1").innerHTML = "Hai scelto: " + sceltaGiocatore + "<br>Il computer ha scelto: " + sceltaComputer;
+
+            calcolaPunteggio(sceltaGiocatore, sceltaComputer);
+            mostraPunteggio();
+        }
+
+        function calcolaPunteggio(giocatore, computer) {
+            if (giocatore === computer) {
+                // Pareggio
+            } else if (
+                (giocatore === "sasso" && computer === "forbice") ||
+                (giocatore === "carta" && computer === "sasso") ||
+                (giocatore === "forbice" && computer === "carta")
+            ) {
+                punteggioGiocatore++;
+            } else {
+                punteggioComputer++;
+            }
+        }
+
+        function mostraPunteggio() {
+            document.getElementById("punteggio").innerHTML = "Punteggio Giocatore: " + punteggioGiocatore + " - Punteggio Computer: " + punteggioComputer;
+        }
+    </script>
+
+</body>
+</html>
