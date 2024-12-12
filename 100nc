@@ -11,6 +11,12 @@
         width: 500px;
         display: inline-block;
     }
+
+    #countdown {
+        font-size: 20px;
+        font-weight: bold;
+        margin-top: 20px;
+    }
 </style>
 
 </head>
@@ -24,22 +30,42 @@
         <p id="out1"></p>
     </div>
 
-    <!-- Pulsante per generare nuovi numeri casuali -->
-    <button onclick="GeneraNumeri()">Genera Numeri Casuali</button>
+    <!-- Elemento per mostrare il countdown -->
+    <div id="countdown"></div>
 
     <script>
         // Definizione dell'array per contenere i numeri
         let numeri = [];
+        let countdownTime = 3; // Imposta il countdown iniziale (in secondi)
 
         // Funzione per generare un array con numeri casuali da 0 a 100
         function GeneraNumeri() {
             // Riempie l'array con 100 numeri casuali da 0 a 100
+            numeri = []; // Pulisce l'array precedente
             for (let i = 0; i < 100; i++) {
                 numeri[i] = Math.floor(Math.random() * 101); // Numero casuale tra 0 e 100
             }
             // Mostra l'array nel contenitore HTML
             document.getElementById("out1").innerHTML = numeri.join(", ");
         }
+
+        // Funzione per aggiornare il countdown
+        function aggiornaCountdown() {
+            document.getElementById("countdown").innerHTML = `Prossimo aggiornamento in: ${countdownTime} secondi`;
+
+            if (countdownTime <= 0) {
+                GeneraNumeri(); // Genera nuovi numeri quando il countdown arriva a 0
+                countdownTime = 3; // Reset del countdown a 3 secondi
+            } else {
+                countdownTime--; // Decrementa il countdown
+            }
+        }
+
+        // Imposta l'intervallo per aggiornare il countdown ogni secondo
+        setInterval(aggiornaCountdown, 1000);
+
+        // Genera i numeri per la prima volta immediatamente
+        GeneraNumeri();
 
     </script>
 
