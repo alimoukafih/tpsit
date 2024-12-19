@@ -7,72 +7,46 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            padding: 20px;
-            background-color: #f4f4f4;
+            margin: 20px;
         }
         #output {
             margin-top: 20px;
-            padding: 10px;
-            background-color: #ffffff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
         }
     </style>
 </head>
 <body>
-    <h1>Temporizzatore Numerico</h1>
-    <div id="output">
-        <p id="number"></p>
-        <p id="evenOdd"></p>
-        <p id="prime"></p>
-        <p id="doubleHalf"></p>
-        <p id="complement"></p>
-        <p id="sumNeighbors"></p>
-        <p id="multiplyPi"></p>
-    </div>
 
-    <script>
-        function isPrime(n) {
-            if (n < 2) return false;
-            for (let i = 2; i <= Math.sqrt(n); i++) {
-                if (n % i === 0) {
-                    return false;
-                }
-            }
-            return true;
-        
-        function processNumber() {
-           
-            const num = Math.floor(Math.random() * 1000) + 1;
-            
-            // Visualizza il numero
-            document.getElementById("number").textContent = `Numero: ${num}`;
+<h1>Temporizzatore Numerico</h1>
+<button id="startButton">Inizia</button>
+<div id="output"></div>
 
-           
-            document.getElementById("evenOdd").textContent = (num % 2 === 0) ? `${num} è pari` : `${num} è dispari`;
-
-          
-            document.getElementById("prime").textContent = isPrime(num) ? `${num} è un numero primo` : `${num} non è un numero primo`;
-
-            
-            document.getElementById("doubleHalf").textContent = `Doppio: ${num * 2}, Metà intera: ${Math.floor(num / 2)}`;
-
-           
-            document.getElementById("complement").textContent = `Complemento di ${num} rispetto a 1000: ${1000 - num}`;
-
-           
-            document.getElementById("sumNeighbors").textContent = `Somma di ${num} con il suo precedente e successivo: ${num - 1 + num + num + 1}`;
-
-           
-            document.getElementById("multiplyPi").textContent = `${num} moltiplicato per 3.14: ${(num * 3.14).toFixed(2)}`;
+<script>
+    function isPrime(num) {
+        if (num <= 1) return false;
+        for (let i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i === 0) return false;
         }
+        return true;
+    }
 
-
-        setInterval(processNumber, 5000);
-
-
+    function generateRandomNumber() {
+        const num = Math.floor(Math.random() * 1000) + 1;
+        const output = document.getElementById('output');
         
-        processNumber();
-    </script>
+        output.innerHTML = `<h2>Numero Generato: ${num}</h2>`;
+        output.innerHTML += `<p>${num} è ${num % 2 === 0 ? 'pari' : 'dispari'}</p>`;
+        output.innerHTML += `<p>${num} ${isPrime(num) ? 'è' : 'non è'} un numero primo.</p>`;
+        output.innerHTML += `<p>Il doppio di ${num} è ${num * 2}</p>`;
+        output.innerHTML += `<p>La metà di ${num} è ${Math.floor(num / 2)}</p>`;
+        output.innerHTML += `<p>Il complemento di ${num} rispetto a 1000 è ${1000 - num}</p>`;
+        output.innerHTML += `<p>Somma di ${num}, ${num-1} e ${num+1} è ${num + (num-1) + (num+1)}</p>`;
+        output.innerHTML += `<p>${num} * 3.14 = ${num * 3.14}</p>`;
+    }
+
+    document.getElementById('startButton').addEventListener('click', function() {
+        setInterval(generateRandomNumber, 5000);
+    });
+</script>
+
 </body>
 </html>
