@@ -7,47 +7,86 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
       body {
-        background-image: url('https://images.pexels.com/photos/673020/pexels-photo-673020.jpeg?cs=srgb&dl=pexels-eberhardgross-673020.jpg&fm=jpg');
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        background-repeat: no-repeat;
+        background-color: #000; /* Background nero */
         color: white;
-      }
-      .card {
-        margin: 15px 0;
+        font-family: Arial, sans-serif; /* Font Arial */
       }
       .navbar {
-        background-color: rgba(255, 255, 255, 0.7);
+        background-color: rgba(255, 255, 255, 0.8);
       }
-      .card-title, .card-text {
-        color: black;
+      .navbar-brand img {
+        margin-right: 10px;
+      }
+      .card {
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        margin-bottom: 20px;
+        background-color: rgba(0, 0, 0, 0.6); /* Scatola nera trasparente */
+      }
+      .card:hover {
+        transform: translateY(-10px);
       }
       .card-img-top {
-        height: 300px; /* Impostato per una dimensione uniforme */
-        object-fit: cover; /* Per mantenere l'immagine proporzionata */
+        height: 300px; /* Uniform height for all images */
+        object-fit: cover;
+      }
+      .card-body {
+        padding: 15px;
+        border-radius: 10px;
+      }
+      .card-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: white; /* Testo bianco */
+      }
+      .card-text {
+        font-size: 1rem;
+        color: white; /* Testo bianco */
+      }
+      .btn-primary {
+        background-color: white; /* Pulsante bianco */
+        color: #333; /* Testo pulsante scuro */
+        border-color: #ccc;
+      }
+      .btn-primary:hover {
+        background-color: #f8f8f8; /* Colore chiaro al passaggio */
+        border-color: #999;
+        color: #333;
+      }
+      .container {
+        margin-top: 50px;
+      }
+      .card-columns {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      .card-columns .card {
+        flex: 1 1 48%;
       }
     </style>
   </head>
   <body>
-    <nav class="navbar navbar-light bg-light">
+    <nav class="navbar navbar-light">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
-          <img src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+          <img src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png" alt="Logo" width="30" height="24">
           lavori ali moukafih
         </a>
       </div>
     </nav>
 
     <div class="container">
-      <div class="row row-cols-1 row-cols-md-3 g-4">
+      <div class="row row-cols-1 row-cols-md-2 g-4">
         <div class="col">
           <div class="card">
             <img src="https://t3.ftcdn.net/jpg/05/15/64/02/360_F_515640293_nJo6TqIZqDNpKNTJ6Ufzuikmtq8VyNoV.jpg" class="card-img-top" alt="css">
             <div class="card-body">
-              <h5 class="card-title">css</h5>
-              <p class="card-text">tutti i lavori fatti con css</p>
-              <a href="https://github.com/alimoukafih/menu-css" class="btn btn-primary">guardalo</a>
+              <h5 class="card-title">CSS</h5>
+              <p class="card-text">Esplora i lavori creati con CSS, tecniche e design innovativi.</p>
+              <a href="" class="btn btn-primary">Guarda su GitHub</a>
             </div>
           </div>
         </div>
@@ -56,9 +95,9 @@
           <div class="card">
             <img src="https://static.vecteezy.com/ti/vettori-gratis/p1/13313458-html-icona-3d-interpretazione-illustrazione-vettoriale.jpg" class="card-img-top" alt="html">
             <div class="card-body">
-              <h5 class="card-title">tutti gli esercizzi fatti con html</h5>
-              <p class="card-text">esercizzi fatti con html</p>
-              <a href="https://github.com/alimoukafih/menu-html" class="btn btn-primary">guardalo</a>
+              <h5 class="card-title">HTML</h5>
+              <p class="card-text">Esplora i vari esercizi e progetti realizzati con HTML.</p>
+              <a href="https://alimoukafih.github.io/tpsit/menuhtml.html" class="btn btn-primary">Guarda su GitHub</a>
             </div>
           </div>
         </div>
@@ -67,9 +106,9 @@
           <div class="card">
             <img src="https://media.istockphoto.com/id/839977330/it/vettoriale/icone-roccia-carta-forbici.jpg?s=612x612&w=0&k=20&c=WxtUkOCdBUwm7sOpexQ-9eqrW3ldzM8KMuYhRaj58Xc=" class="card-img-top" alt="morra cinese">
             <div class="card-body">
-              <h5 class="card-title">morra cinese</h5>
-              <p class="card-text">gioco della morra cinese dove giocherai contro un bot</p>
-              <a href="https://github.com/alimoukafih/morra-cinese" class="btn btn-primary">giocala</a>
+              <h5 class="card-title">Morra Cinese</h5>
+              <p class="card-text">Gioca al classico gioco della morra cinese contro un bot online.</p>
+              <a href="" class="btn btn-primary">Gioca ora</a>
             </div>
           </div>
         </div>
@@ -78,9 +117,9 @@
           <div class="card">
             <img src="https://thumbs.dreamstime.com/b/logo-javascript-illustrativo-su-sfondo-bianco-illustrazione-editoriale-download-banner-vettoriale-jpeg-208329459.jpg" class="card-img-top" alt="java">
             <div class="card-body">
-              <h5 class="card-title">java</h5>
-              <p class="card-text">tutti gli esercizzi fatti con java</p>
-              <a href="https://alimoukafih.github.io/tpsit/menujava.html" class="btn btn-primary">guardalo</a>
+              <h5 class="card-title">Java</h5>
+              <p class="card-text">Esercizi e progetti sviluppati utilizzando il linguaggio di programmazione Java.</p>
+              <a href="https://alimoukafih.github.io/tpsit/menujava.html" class="btn btn-primary">Guarda su GitHub</a>
             </div>
           </div>
         </div>
@@ -90,3 +129,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>
 </html>
+
