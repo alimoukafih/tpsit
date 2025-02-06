@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8"> <!-- Definisce la codifica dei caratteri come UTF-8 per supportare caratteri speciali -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Imposta la larghezza della pagina per una visualizzazione ottimale su dispositivi mobili -->
+    <title>Bottoni e Cronometro</title> <!-- Titolo della pagina che apparirà sulla barra del browser -->
+    <style>
+        button {
+            margin: 10px; /* Distanza di 10px tra i bottoni */
+            padding: 10px 20px; /* Padding interno per i bottoni (verticale 10px, orizzontale 20px) */
+            font-size: 16px; /* Imposta la dimensione del font del testo nei bottoni */
+        }
+    </style>
+</head>
+<body>
+    <h1>Test di Bottoni</h1> <!-- Titolo principale della pagina -->
+
+    <!-- 4 bottoni, ognuno con un ID univoco -->
+    <button id="button1">Bottone 1</button>
+    <button id="button2">Bottone 2</button>
+    <button id="button3">Bottone 3</button>
+    <button id="button4">Bottone 4</button>
+
+    <!-- Elemento per visualizzare la data e l'ora quando viene cliccato un bottone -->
+    <p id="dateTimeDisplay"></p>
+    <!-- Elemento per visualizzare la differenza di tempo tra i clic -->
+    <p id="timeDifferenceDisplay"></p>
+
+    <script>
+        let firstClickTime = null;  // Variabile che memorizza il timestamp del primo clic, inizialmente è null
+        let timeDifferences = [];   // Array per memorizzare le differenze di tempo (in secondi, decimi e millesimi)
+
+        // Funzione che viene eseguita ogni volta che un bottone viene cliccato
+        function displayDateTime() {
+            let currentDate = new Date();  // Ottiene la data e l'ora corrente
+            let formattedDate = currentDate.toLocaleString();  // Converte la data in una stringa formattata
+            document.getElementById("dateTimeDisplay").innerText = "Data e ora: " + formattedDate;  // Visualizza la data e ora formattata
+
+            // Controlla se è il primo clic (cioè se firstClickTime è ancora null)
+            if (firstClickTime === null) {
+                firstClickTime = currentDate.getTime();  // Memorizza il timestamp del primo clic
+            } else {
+                // Calcola la differenza in millisecondi tra il clic corrente e il primo clic
+                let timeDifference = currentDate.getTime() - firstClickTime;
+
+                // Converte la differenza in secondi, decimi e millesimi
+                let seconds = Math.floor(timeDifference / 1000);  // Converte i millisecondi in secondi
+                let milliseconds = timeDifference % 1000;  // Ottiene i millisecondi rimanenti
+                let tenths = Math.floor(milliseconds / 100);  // Converte i millisecondi in decimi
+                milliseconds = milliseconds % 100;  // Ottiene i millisecondi rimanenti (meno di 100)
+
+                // Memorizza la differenza di tempo nell'array timeDifferences
+                timeDifferences.push({ seconds, tenths, milliseconds });
+
+                // Mostra le differenze di tempo (in secondi, decimi e millesimi) separati da virgola
+                document.getElementById("timeDifferenceDisplay").innerText =
+                    "Differenze di tempo (secondi, decimi, millesimi): " +
+                    timeDifferences.map(d => `${d.seconds}s ${d.tenths}.${d.milliseconds}`).join(", ");
+            }
+        }
+
+        // Aggiungi un evento 'click' per ciascuno dei 4 bottoni
+        document.getElementById("button1").addEventListener("click", displayDateTime);  // Al clic su button1, esegui displayDateTime
+        document.getElementById("button2").addEventListener("click", displayDateTime);  // Al clic su button2, esegui displayDateTime
+        document.getElementById("button3").addEventListener("click", displayDateTime);  // Al clic su button3, esegui displayDateTime
+        document.getElementById("button4").addEventListener("click", displayDateTime);  // Al clic su button4, esegui displayDateTime
+    </script>
+</body>
+</html>
