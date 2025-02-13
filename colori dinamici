@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Griglie con Colori Dinamici</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            flex-direction: column;
+        }
+        .griglie-container {
+            display: flex;
+            justify-content: space-between;
+            width: 80%; /* Contenitore per le griglie, prende il 80% della larghezza */
+        }
+        .grid {
+            display: grid;
+            gap: 10px;
+        }
+        .grid-3x3 {
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+        }
+        .grid-2x2 {
+            grid-template-columns: repeat(2, 100px);
+            grid-template-rows: repeat(2, 100px);
+        }
+        .cell {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            transition: background-color 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <h1>Griglie con Colori Dinamici</h1>
+
+    <div class="griglie-container">
+        <!-- Griglia 3x3 a sinistra -->
+        <div class="grid grid-3x3">
+            <div class="cell" onclick="changeColor(this)"></div>
+            <div class="cell" onclick="changeColor(this)"></div>
+            <div class="cell" onclick="changeColor(this)"></div>
+            <div class="cell" onclick="changeColor(this)"></div>
+            <div class="cell" onclick="changeColor(this)"></div>
+            <div class="cell" onclick="changeColor(this)"></div>
+            <div class="cell" onclick="changeColor(this)"></div>
+            <div class="cell" onclick="changeColor(this)"></div>
+            <div class="cell" onclick="changeColor(this)"></div>
+        </div>
+
+        <!-- Griglia 2x2 a destra -->
+        <div class="grid grid-2x2">
+            <div class="cell" onclick="changeColor(this)"></div>
+            <div class="cell" onclick="changeColor(this)"></div>
+            <div class="cell" onclick="changeColor(this)"></div>
+            <div class="cell" onclick="changeColor(this)"></div>
+        </div>
+    </div>
+
+    <script>
+        const colors = ["#FF5733", "#33FF57", "#3357FF", "#FF33A1", "#FFBD33", "#33FFF6", "#C833FF", "#FFC733", "#33FFD8"];
+        
+        function changeColor(cell) {
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            cell.style.backgroundColor = randomColor;
+        }
+    </script>
+</body>
+</html>
