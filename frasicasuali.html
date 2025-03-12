@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generatore di Combinazioni</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        #combinazioni {
+            margin-top: 20px;
+        }
+        .combinazione {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Generatore di Combinazioni di Frasi</h1>
+    
+    <p>Clicca il pulsante per generare le prime 100 combinazioni di soggetti, verbi e complementi:</p>
+    <button onclick="generaCombinazioni()">Genera Combinazioni</button>
+    
+    <div id="combinazioni"></div>
+
+    <script>
+        // Array precaricati
+        let soggetti = ["Mario", "Luca", "Giulia", "Anna", "Francesco", "Elena", "Roberto", "Sara", "Davide", "Chiara"];
+        let verbi = ["mangia", "corre", "legge", "scrive", "disegna", "parla", "cammina", "guarda", "ascolta", "gioca"];
+        let complemento = ["una mela", "nel parco", "un libro", "una lettera", "un quadro", "al telefono", "sul marciapiede", "la TV", "musica", "a calcio"];
+
+        // Funzione per generare le combinazioni fino a un massimo di 100
+        function generaCombinazioni() {
+            let combinazioni = [];
+            let count = 0;
+            
+            for (let soggetto of soggetti) {
+                for (let verbo of verbi) {
+                    for (let compl of complemento) {
+                        combinazioni.push(`${soggetto} ${verbo} ${compl}`);
+                        count++;
+                        if (count >= 100) {
+                            break;
+                        }
+                    }
+                    if (count >= 100) break;
+                }
+                if (count >= 100) break;
+            }
+
+            // Visualizzare le prime 100 combinazioni sulla pagina
+            let combinazioniDiv = document.getElementById('combinazioni');
+            combinazioniDiv.innerHTML = "<h2>Prime 100 combinazioni:</h2>";
+            combinazioni.forEach((combinazione) => {
+                combinazioniDiv.innerHTML += `<p class="combinazione">${combinazione}</p>`;
+            });
+        }
+    </script>
+</body>
+</html>
