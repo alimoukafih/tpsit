@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esplora il Sistema Solare</title>
+  <style>
+    body { margin: 0; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // Scena, telecamera e renderizzatore
+    const scene = new THREE.Scene();
+
+    // Creazione della telecamera (prospettiva)
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    
+    // Creazione del renderer
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight); // Adatta la dimensione alla finestra
+    document.body.appendChild(renderer.domElement);
+
+    // Creazione del Sole (dimensione ridotta)
+    const sunGeometry = new THREE.SphereGeometry(10, 32, 32); // Sole più grande
+    const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xFFFF00 });
+    const sun = new THREE.Mesh(sunGeometry, sunMaterial);
+    scene.add(sun);
+
+    // Pianeti e loro distanze dal Sole con dimensioni più compatte
+    const planets = [
+      { name: "Mercurio", radius: 1, distance: 12, orbitalPeriod: 0.24 },
+      { name: "Venere", radius: 2, distance: 18, orbitalPeriod: 0.615 },
+      { name: "Terra", radius: 2.5, distance: 24, orbitalPeriod: 1 },
+      { name: "Marte", radius: 3, distance: 30, orbitalPeriod: 1.88 },
+      { name: "Giove", radius: 6, distance: 40, orbitalPeriod: 11.86 },
+      { name: "Saturno", radius: 5, distance: 50, orbitalPeriod: 29.46 },
+      { name: "Urano", radius: 4, distance: 60, orbitalPeriod: 84.02 },
+      { name: "Nettuno", radius: 4, distance: 70, orbitalPeriod: 164.8 },
+      { name: "Plutone", radius: 1, distance: 80, orbitalPeriod: 248 }
+    ];
+
+    // Funzione per creare il pianeta
+    function createPlanet(radius, color) {
+      const geometry = new THREE.SphereGeometry(radius, 32, 32);
+      const material = new THREE.MeshBasicMaterial({ color: color });
+      return new THREE.Mesh(geometry, material);
+    }
+
+    // Funzione per creare l'orbita di un pianeta (più sottile)
+    function createOrbit(distance) {
+      const geometry = new THREE.RingGeometry(distance - 0.2, distance + 0.2, 64); // Orbite molto più sottili
+      const material = new THREE.MeshBasicMaterial({ color: 0x888888, side: THREE.DoubleSide });
+      const ring = new THREE.Mesh(geometry, material);
+      ring.rotation.x = Math.PI / 2; // Ruotiamo il cerchio in modo che sia piatto
+      return ring;
+    }
+
+    // Aggiunta dei pianeti alla scena
+    const planetMeshes = [];
+    planets.forEach(planet => {
+      // Aggiungi l'orbita
+      const orbit = createOrbit(planet.distance);
+      scene.add(orbit);
+
+      // Aggiungi il pianeta
+      const planetMesh = createPlanet(planet.radius, Math.random() * 0xFFFFFF);
+      planetMesh.position.x = planet.distance;
+      scene.add(planetMesh);
+      planetMeshes.push({ mesh: planetMesh, distance: planet.distance, orbitalPeriod: planet.orbitalPeriod });
+    });
+
+    // Impostare la posizione iniziale della telecamera (visuale dall'alto)
+    camera.position.y = 150; // Posizione sopra la scena, guardando il Sole
+    camera.position.z = 0;   // Posizioniamo la telecamera in modo che sia centrata sul piano XY
+    camera.lookAt(0, 0, 0);  // Impostiamo la telecamera per guardare il centro della scena (il Sole)
+
+    // Funzione per animare la scena
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // Rotazione del Sole
+      sun.rotation.y += 0.005;
+
+      // Orbite dei pianeti con periodi orbitali realistici
+      planetMeshes.forEach(planet => {
+        const time = Date.now() * 0.0001; // Tempo simulato
+        const orbitSpeed = (2 * Math.PI) / planet.orbitalPeriod; // Velocità angolare in base al periodo orbitale
+        
+        planet.mesh.rotation.y += 0.01; // Rotazione del pianeta sul suo asse
+        
+        // Orbita attorno al Sole
+        planet.mesh.position.x = planet.distance * Math.cos(time * orbitSpeed);
+        planet.mesh.position.z = planet.distance * Math.sin(time * orbitSpeed);
+      });
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // Adattare automaticamente il canvas alle dimensioni della finestra
+    window.addEventListener('resize', () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      renderer.setSize(width, height);
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+    });
+  </script>
+</body>
+</html>
