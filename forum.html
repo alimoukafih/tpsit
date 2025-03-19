@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Funzione di Attivazione</title>
+</head>
+<body>
+
+  <h1>Funzione di Attivazione Neuronale</h1>
+
+  <!-- Form per input -->
+  <form id="attivazioneForm">
+    <label for="a">Numero A:</label>
+    <input type="number" id="a" name="a"><br><br>
+
+    <label for="b">Numero B:</label>
+    <input type="number" id="b" name="b"><br><br>
+
+    <label for="c">Numero C:</label>
+    <input type="number" id="c" name="c"><br><br>
+
+    <label for="d">Numero D:</label>
+    <input type="number" id="d" name="d"><br><br>
+
+    <button type="button" onclick="calcola()">Calcola</button>
+  </form>
+
+  <h2>Risultati:</h2>
+  <div id="output">
+    <p id="somma"></p>
+    <p id="attivazione"></p>
+  </div>
+
+  <script>
+    // Funzione che calcola la somma e l'attivazione
+    function calcola() {
+      // Ottieni i valori degli input
+      var a = parseFloat(document.getElementById('a').value);
+      var b = parseFloat(document.getElementById('b').value);
+      var c = parseFloat(document.getElementById('c').value);
+      var d = parseFloat(document.getElementById('d').value);
+
+      // Primo output: Somma dei numeri
+      var somma = a + b + c + d;
+      document.getElementById('somma').textContent = 'Somma dei numeri: ' + somma;
+
+      // Secondo output: Funzione di attivazione (sigmoide)
+      var attivazione = sigmoid(somma);
+      document.getElementById('attivazione').textContent = 'Risultato attivato (Sigmoide): ' + attivazione;
+    }
+
+    // Funzione sigmoide
+    function sigmoid(x) {
+      return 1 / (1 + Math.exp(-x));
+    }
+  </script>
+
+</body>
+</html>
