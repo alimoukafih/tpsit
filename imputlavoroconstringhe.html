@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esercizio di Stringhe</title>
+</head>
+<body>
+
+  <h1>Operazioni su Stringhe</h1>
+
+  <!-- Form di input -->
+  <form id="inputForm">
+    <label for="stringaA">Stringa A:</label>
+    <input type="text" id="stringaA" name="stringaA"><br><br>
+
+    <label for="stringaB">Stringa B:</label>
+    <input type="text" id="stringaB" name="stringaB"><br><br>
+
+    <button type="button" onclick="calcola()">Esegui</button>
+  </form>
+
+  <!-- Output -->
+  <h2>Risultati:</h2>
+  <div id="output">
+    <p id="lunghezzaA"></p>
+    <p id="lunghezzaB"></p>
+    <p id="invertitaA"></p>
+    <p id="invertitaB"></p>
+    <p id="unione"></p>
+    <p id="somma"></p>
+  </div>
+
+  <script>
+    // Funzione per calcolare la lunghezza delle stringhe
+    function calcola() {
+      var stringaA = document.getElementById('stringaA').value;
+      var stringaB = document.getElementById('stringaB').value;
+
+      // Calcolare e visualizzare la lunghezza delle stringhe
+      var lunghezzaA = stringaA.length;
+      var lunghezzaB = stringaB.length;
+
+      document.getElementById('lunghezzaA').textContent = 'Lunghezza Stringa A: ' + lunghezzaA;
+      document.getElementById('lunghezzaB').textContent = 'Lunghezza Stringa B: ' + lunghezzaB;
+
+      // Funzione che inverte la stringa
+      function invertiStringa(str) {
+        return str.split('').reverse().join('');
+      }
+
+      // Visualizzare la stringa invertita
+      document.getElementById('invertitaA').textContent = 'Stringa A invertita: ' + invertiStringa(stringaA);
+      document.getElementById('invertitaB').textContent = 'Stringa B invertita: ' + invertiStringa(stringaB);
+
+      // Funzione per unire le due stringhe
+      var unione = stringaA + ' ' + stringaB;
+      document.getElementById('unione').textContent = 'Unione delle due stringhe: ' + unione;
+
+      // Somma delle lunghezze delle due stringhe e controllo sulla lunghezza di B
+      var sommaLunghezze = lunghezzaA + lunghezzaB;
+      if (lunghezzaB > 20) {
+        document.getElementById('somma').textContent = 'Somma lunghezze: ' + sommaLunghezze + ' (B troppo lunga)';
+      } else {
+        document.getElementById('somma').textContent = 'Somma lunghezze: ' + sommaLunghezze;
+      }
+    }
+  </script>
+
+</body>
+</html>
