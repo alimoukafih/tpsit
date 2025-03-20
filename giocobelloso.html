@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gioco Velocità Click</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJpK6iN2t9wKsZf4a3bP0VZbQWJd6fbWoLfZDmG6WV0D4qhsf1SovdGLg9py" crossorigin="anonymous">
+  <style>
+    body {
+      background-color: #f4f4f4;
+    }
+    .game-area {
+      width: 100%;
+      height: 500px;
+      background-color: #fff;
+      position: relative;
+      margin-top: 20px;
+      border: 1px solid #ddd;
+    }
+    .dot {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: white;
+      display: none;
+    }
+    .start-btn, .game-over-btn {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1 class="text-center mt-5">Gioco Velocità Click</h1>
+  
+  <div id="player-info" class="mt-4">
+    <h3>Inserisci il tuo nome e email</h3>
+    <form id="player-form">
+      <div class="mb-3">
+        <label for="playerName" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="playerName" required>
+      </div>
+      <div class="mb-3">
+        <label for="playerEmail" class="form-label">Email</label>
+        <input type="email" class="form-control" id="playerEmail" required>
+      </div>
+      <button type="submit" class="btn btn-primary start-btn">Inizia il Gioco</button>
+    </form>
+  </div>
+
+  <div id="game" class="mt-4" style="display: none;">
+    <h3 id="level-title" class="text-center">Livello 1</h3>
+    <div class="game-area" id="gameArea">
+      <div class="dot" id="dot"></div>
+    </div>
+    <div id="timer" class="text-center mt-3">
+      <p>Tempo totale: <span id="totalTime">0</span> s</p>
+      <p>Tempo medio: <span id="avgTime">0</span> s</p>
+      <p id="clicks-left">Clicks rimanenti: 10</p>
+    </div>
+    <button class="btn btn-danger game-over-btn" style="display: none;">Fine del gioco</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+// Variabili per il gioco
+let playerName, playerEmail;
+let clickCount = 0;
+let totalTime = 0;
+let times = [];
+let level = 1;
+let dotTimeout;
+let dotDisappearTimeout;
+let clickAllowed = true;
+
+const gameArea = document.getElementById('gameArea');
+const dot = document.getElementById('dot');
+const timerDisplay = document.getElementById('totalTime');
+const avgDisplay = document.getElementById('avgTime');
+const clicksLeft = document.getElementById('clicks-left');
+const levelTitle = document.getElementById('level-title');
+const startBtn = document.querySelector('.start-btn');
+const gameOverBtn = document.querySelector('.game-over-btn');
+const playerForm = document.getElementById('player-form');
+const playerInfo = document.getElementById('player-info');
+const gameDiv = document.getElementById('game');
+
+// Funzione per iniziare il gioco
+startBtn.addEventListener('click', function(e) {
+  e.preventDefault();
+  playerName = document.getElementById('playerName').value;
+  playerEmail = document.getElementById('playerEmail').value;
+
+  if (playerName && playerEmail) {
+    playerInfo.style.display = 'none';
+    gameDiv.style.display = 'block';
+    startLevel();
+  }
+});
+
+// Funzione per far partire un livello
+function startLevel() {
+  clickCount = 0;
+  times = [];
+  totalTime = 0;
+  updateStats();
+
+  // Aumentiamo la velocità e la frequenza di apparizione in base al livello
+  let interval = 1000 / level; // Frequenza di apparizione
+  let disappearTime = 500 / level; // Tempo di scomparsa
+
+  levelTitle.textContent = `Livello ${level}`;
+
+  // Funzione per mostrare e nascondere il punto
+  function showDot() {
+    if (clickCount < 10) {
+      dot.style.top = `${Math.random() * 400}px`;
+      dot.style.left = `${Math.random() * 400}px`;
+      dot.style.display = 'block';
+      
+      dotTimeout = setTimeout(() => {
+        dot.style.display = 'none';
+        if (clickAllowed) {
+          clickCount++;
+          times.push(0); // Se non clicca, mettiamo 0 per segnare la penalità
+          updateStats();
+        }
+      }, disappearTime);
+
+      // Aggiungiamo una nuova chiamata a showDot per il livello successivo
+      setTimeout(showDot, interval);
+    }
+  }
+
+  showDot();
+  startTimer();
+}
+
+// Funzione di registrazione click
+dot.addEventListener('click', function() {
+  if (clickCount < 10) {
+    let clickTime = new Date().getTime();
+    times.push((clickTime - totalTime) / 1000);
+    totalTime = clickTime;
+    clickCount++;
+    updateStats();
+  }
+});
+
+// Funzione per aggiornare le statistiche
+function updateStats() {
+  clicksLeft.textContent = `Clicks rimanenti: ${10 - clickCount}`;
+
+  if (clickCount === 10) {
+    clearTimeout(dotTimeout);
+    clearTimeout(dotDisappearTimeout);
+    const avg = times.reduce((a, b) => a + b) / times.length;
+    timerDisplay.textContent = `Tempo totale: ${totalTime / 1000} s`;
+    avgDisplay.textContent = `Tempo medio: ${avg.toFixed(2)} s`;
+
+    gameOverBtn.style.display = 'block';
+  }
+}
+
+// Funzione per avviare il timer
+function startTimer() {
+  let startTime = new Date().getTime();
+  setInterval(function() {
+    if (clickCount < 10) {
+      const elapsedTime = (new Date().getTime() - startTime) / 1000;
+      timerDisplay.textContent = `Tempo totale: ${elapsedTime.toFixed(2)} s`;
+    }
+  }, 100);
+}
+
+gameOverBtn.addEventListener('click', function() {
+  alert(`Gioco finito! Il tuo punteggio finale: ${totalTime / 1000} secondi`);
+  location.reload(); // Ricarica la pagina per iniziare una nuova partita
+});
+</script>
+</body>
+</html>
