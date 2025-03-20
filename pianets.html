@@ -23,6 +23,18 @@
     renderer.setSize(window.innerWidth, window.innerHeight); // Adatta la dimensione alla finestra
     document.body.appendChild(renderer.domElement);
 
+    // Aggiungi sfondo stellato
+    const starTexture = new THREE.TextureLoader().load('https://cdn.pixabay.com/photo/2018/04/06/08/32/space-3292863_960_720.jpg'); // URL della texture stellare
+    const starMaterial = new THREE.MeshBasicMaterial({ 
+      map: starTexture,
+      side: THREE.BackSide  // Assicura che la texture sia visibile all'interno della sfera
+    });
+
+    // Crea una sfera che funge da sfondo stellato
+    const starGeometry = new THREE.SphereGeometry(1000, 32, 32);
+    const stars = new THREE.Mesh(starGeometry, starMaterial);
+    scene.add(stars);
+
     // Creazione del Sole (dimensione ridotta)
     const sunGeometry = new THREE.SphereGeometry(10, 32, 32); // Sole più grande
     const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xFFFF00 });
@@ -35,7 +47,7 @@
       { name: "Venere", radius: 2, distance: 18, orbitalPeriod: 0.615 },
       { name: "Terra", radius: 2.5, distance: 24, orbitalPeriod: 1 },
       { name: "Marte", radius: 3, distance: 30, orbitalPeriod: 1.88 },
-      { name: "Giove", radius: 6, distance: 40, orbitalPeriod: 11.86 },
+      { name: "Giove", radius: 6, distance: 45, orbitalPeriod: 11.86 },
       { name: "Saturno", radius: 5, distance: 50, orbitalPeriod: 29.46 },
       { name: "Urano", radius: 4, distance: 60, orbitalPeriod: 84.02 },
       { name: "Nettuno", radius: 4, distance: 70, orbitalPeriod: 164.8 },
@@ -57,6 +69,38 @@
       ring.rotation.x = Math.PI / 2; // Ruotiamo il cerchio in modo che sia piatto
       return ring;
     }
+
+    // Funzione per creare gli asteroidi
+    function createAsteroids(minDistance, maxDistance, numAsteroids) {
+      const asteroidGroup = new THREE.Group();
+
+      // Generiamo gli asteroidi tra la distanza minima e massima
+      for (let i = 0; i < numAsteroids; i++) {
+        const radius = Math.random() * 0.5 + 0.2; // Raggio casuale per l'asteroide
+        const geometry = new THREE.SphereGeometry(radius, 16, 16);
+        const material = new THREE.MeshBasicMaterial({ color: Math.random() > 0.5 ? 0x808080 : 0x404040 }); // Grigio o grigio scuro
+        const asteroid = new THREE.Mesh(geometry, material);
+
+        const distance = Math.random() * (maxDistance - minDistance) + minDistance;
+        const angle = Math.random() * 2 * Math.PI; // Angolo casuale per distribuirli lungo l'orbita
+
+        // Posizioniamo l'asteroide
+        asteroid.position.x = distance * Math.cos(angle);
+        asteroid.position.z = distance * Math.sin(angle);
+
+        asteroidGroup.add(asteroid);
+      }
+
+      return asteroidGroup;
+    }
+
+    // Aggiunta della fascia di asteroidi tra Marte (30) e Giove (45)
+    const asteroids1 = createAsteroids(35, 40, 500); // 500 asteroidi tra Marte e Giove
+    scene.add(asteroids1);
+
+    // Aggiunta della fascia di asteroidi tra Plutone (80) e 90
+    const asteroids2 = createAsteroids(82, 90, 500); // 500 asteroidi tra Plutone e 90
+    scene.add(asteroids2);
 
     // Aggiunta dei pianeti alla scena
     const planetMeshes = [];
@@ -95,6 +139,10 @@
         planet.mesh.position.x = planet.distance * Math.cos(time * orbitSpeed);
         planet.mesh.position.z = planet.distance * Math.sin(time * orbitSpeed);
       });
+
+      // Far ruotare anche gli asteroidi attorno al Sole
+      asteroids1.rotation.y += 0.002; // Ruotano lentamente insieme al sistema solare
+      asteroids2.rotation.y += 0.002; // Ruotano lentamente anche la fascia tra Plutone e 90
 
       renderer.render(scene, camera);
     }
