@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movimento Quadrato</title>
+    <style>
+        #square {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="square"></div>
+    
+    <script>
+        const square = document.getElementById('square');
+        let x = 0, y = 0;  // Posizione iniziale
+        let direction = 'east'; // Direzione iniziale
+
+        function moveSquare() {
+            switch (direction) {
+                case 'east':
+                    x += 100;
+                    if (x >= 400) direction = 'south';  // Passa a sud
+                    break;
+                case 'south':
+                    y += 100;
+                    if (y >= 400) direction = 'west';   // Passa a ovest
+                    break;
+                case 'west':
+                    x -= 100;
+                    if (x <= 0) direction = 'north';   // Passa a nord
+                    break;
+                case 'north':
+                    y -= 100;
+                    if (y <= 0) direction = 'east';    // Passa a est
+                    break;
+            }
+            square.style.left = x + 'px';
+            square.style.top = y + 'px';
+        }
+
+        setInterval(moveSquare, 1000);  // Aggiorna la posizione ogni secondo
+    </script>
+</body>
+</html>
