@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generazione Numeri Casuali</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #grafico {
+            width: 100%;
+            height: 400px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .info {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Generazione Numeri Casuali</h1>
+
+    <canvas id="grafico"></canvas>
+
+    <div class="info">
+        <h3>Informazioni:</h3>
+        <p><strong>Media dei numeri generati:</strong> <span id="media"></span></p>
+        <p><strong>Ultimo numero casuale:</strong> <span id="ultimo-numero"></span></p>
+    </div>
+</div>
+
+<script>
+// Inizializzazione degli array
+let ArrayNumeriCasuali = [];
+let ArrayRapporti = [];
+let mediaArray = [];
+let mediaNumero = 0;
+let numeroPrecedente = null;
+let contatoreNumeri = 0;
+
+const L1 = 0;
+const L2 = 1;
+const mediaRange = (L2 - L1) / 2; // La media del range è 0.5
+
+// Funzione per generare numeri casuali tra 0 e 1
+function generaNumeroCasuale() {
+  return Math.random();
+}
+
+// Funzione per calcolare la distanza dalla metà del range (0.5)
+function calcolaDistanzaDaMeta(num) {
+  return Math.abs(num - mediaRange);
+}
+
+// Funzione per calcolare la media dei numeri generati
+function calcolaMedia() {
+  let somma = mediaArray.reduce((a, b) => a + b, 0);
+  return somma / mediaArray.length;
+}
+
+// Inizializzazione del grafico
+let ctx = document.getElementById('grafico').getContext('2d');
+let chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: [], // Le etichette sono vuote all'inizio
+        datasets: [{
+            label: 'Numeri Casuali',
+            data: [], // Dati vuoti inizialmente
+            borderColor: 'rgba(75, 192, 192, 1)',
+            fill: false,
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true,
+                max: 1
+            }
+        }
+    }
+});
+
+// Intervallo per generare numeri ogni 500ms
+let intervallo = setInterval(() => {
+    const numeroCasuale = generaNumeroCasuale();
+    ArrayNumeriCasuali.push(numeroCasuale);
+
+    // Se c'è un numero precedente, calcola il rapporto
+    if (numeroPrecedente !== null) {
+        const rapporto = numeroCasuale / numeroPrecedente;
+        ArrayRapporti.push(rapporto);
+    }
+
+    numeroPrecedente = numeroCasuale;
+
+    // Aggiungi il numero all'array per il calcolo della media
+    mediaArray.push(numeroCasuale);
+
+    // Calcola e mostra la media ogni 50 numeri
+    contatoreNumeri++;
+    if (contatoreNumeri >= 50) {
+        mediaNumero = calcolaMedia();
+        document.getElementById('media').textContent = mediaNumero.toFixed(4);
+        mediaArray = []; // Reset dell'array per il calcolo della prossima media
+        contatoreNumeri = 0;
+    }
+
+    // Aggiorna l'ultimo numero generato nella pagina
+    document.getElementById('ultimo-numero').textContent = numeroCasuale.toFixed(4);
+
+    // Aggiungi i nuovi dati nel grafico
+    chart.data.labels.push(ArrayNumeriCasuali.length); // Aggiungi una nuova etichetta
+    chart.data.datasets[0].data.push(numeroCasuale); // Aggiungi il nuovo numero nei dati del grafico
+    chart.update(); // Aggiorna il grafico
+
+}, 500);
+
+</script>
+
+</body>
+</html>
