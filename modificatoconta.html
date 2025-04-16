@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Generatore di Numeri Casuali</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    canvas {
+      max-width: 700px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Generatore di Numeri Casuali (0-1)</h1>
+  <p>Ogni 500ms viene generato un numero casuale float.</p>
+
+  <canvas id="graficoNumeri" width="600" height="300"></canvas>
+
+  <script>
+    const ArrayNumeriCasuali = [];
+    const ArrayRapporti = [];
+    const ArrayDistanze = [];
+
+    const L1 = 0;
+    const L2 = 1;
+    const mediaRange = (L2 - L1) / 2;
+
+    // Inizializza Chart.js
+    const ctx = document.getElementById('graficoNumeri').getContext('2d');
+    const grafico = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [{
+          label: 'Numero Casuale',
+          data: [],
+          borderColor: 'blue',
+          borderWidth: 2,
+          fill: false,
+        }]
+      },
+      options: {
+        responsive: true,
+        animation: false,
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Index'
+            }
+          },
+          y: {
+            min: 0,
+            max: 1,
+            title: {
+              display: true,
+              text: 'Valore'
+            }
+          }
+        }
+      }
+    });
+
+    let index = 0;
+
+    setInterval(() => {
+      const numeroCasuale = Math.random();
+      ArrayNumeriCasuali.push(numeroCasuale);
+
+      const i = ArrayNumeriCasuali.length - 1;
+
+      // Rapporto tra numeri
+      if (i > 0 && ArrayNumeriCasuali[i - 1] !== 0) {
+        const rapporto = numeroCasuale / ArrayNumeriCasuali[i - 1];
+        ArrayRapporti.push(rapporto);
+      }
+
+      // Distanza dalla media del range
+      const distanza = Math.abs(numeroCasuale - mediaRange);
+      ArrayDistanze.push(distanza);
+
+      // Media ogni 50 numeri
+      if ((i + 1) % 50 === 0) {
+        const ultimi50 = ArrayNumeriCasuali.slice(i - 49, i + 1);
+        const media50 = ultimi50.reduce((acc, val) => acc + val, 0) / 50;
+        console.log(`📊 Media ultimi 50 numeri: ${media50.to
