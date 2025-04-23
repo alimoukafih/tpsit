@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gioco di Tempi di Reazione</title>
+    <style>
+        /* CSS di base */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        #gameArea {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            background-color: #fff;
+            border: 2px solid #000;
+            overflow: hidden;
+        }
+        .ball {
+            position: absolute;
+            border-radius: 50%;
+            background-color: #3498db;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            transition: all 0.1s ease-in-out;
+        }
+        #info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameArea">
+        <div id="info">Clicca sui pallini!</div>
+    </div>
+
+    <script>
+        // JavaScript per il gioco
+        let reactionTimes = [];  // Array per raccogliere i tempi di reazione
+        let gameSpeed = 2000; // Intervallo iniziale tra la comparsa dei pallini (in millisecondi)
+        let gameInterval;
+        let ballCount = 0;
+
+        // Funzione per generare un pallino in una posizione casuale
+        function createBall() {
+            const ball = document.createElement('div');
+            ball.classList.add('ball');
+
+            // Posizione casuale nel contenitore
+            const gameArea = document.getElementById('gameArea');
+            const maxX = gameArea.clientWidth - 50;  // 50px è la dimensione del pallino
+            const maxY = gameArea.clientHeight - 50;
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+
+            ball.style.left = `${randomX}px`;
+            ball.style.top = `${randomY}px`;
+
+            // Aggiungere il pallino all'area di gioco
+            gameArea.appendChild(ball);
+
+            // Tempo di reazione
+            const startTime = Date.now();
+
+            // Gestione del click sul pallino
+            ball.addEventListener('click', function () {
+                const reactionTime = Date.now() - startTime;
+                reactionTimes.push(reactionTime);
+
+                // Rimuovere il pallino
+                gameArea.removeChild(ball);
+
+                // Aggiornare la velocità del gioco
+                increaseSpeed();
+
+                // Mostrare il tempo di reazione nell'area di gioco
+                document.getElementById('info').textContent = `Tempo di reazione: ${reactionTime} ms`;
+            });
+        }
+
+        // Funzione per aumentare la velocità del gioco
+        function increaseSpeed() {
+            if (gameSpeed > 500) { // Limita la velocità a non scendere sotto 500 ms
+                gameSpeed -= 100;
+            }
+        }
+
+        // Funzione per far partire il gioco
+        function startGame() {
+            // Avvia l'intervallo che fa apparire i pallini
+            gameInterval = setInterval(createBall, gameSpeed);
+        }
+
+        // Funzione per fermare il gioco (ad esempio dopo un certo numero di pallini cliccati)
+        function stopGame() {
+            clearInterval(gameInterval);
+            const avgTime = reactionTimes.reduce((a, b) => a + b, 0) / reactionTimes.length;
+            alert(`Gioco terminato! Tempo medio di reazione: ${avgTime.toFixed(2)} ms`);
+        }
+
+        // Avvio del gioco dopo un breve ritardo
+        setTimeout(startGame, 1000);
+
+        // Stop del gioco dopo 30 secondi
+        setTimeout(stopGame, 30000);
+    </script>
+</body>
+</html>
