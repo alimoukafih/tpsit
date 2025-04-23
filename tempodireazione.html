@@ -3,118 +3,409 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gioco di Tempi di Reazione</title>
+    <title>Reaction Time Challenge</title>
     <style>
-        /* CSS di base */
+        /* Reset e stili base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
-            background-color: #f4f4f4;
-        }
-        #gameArea {
-            position: relative;
-            width: 600px;
-            height: 400px;
-            background-color: #fff;
-            border: 2px solid #000;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
             overflow: hidden;
         }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        #gameArea {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
         .ball {
             position: absolute;
             border-radius: 50%;
-            background-color: #3498db;
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             cursor: pointer;
-            transition: all 0.1s ease-in-out;
+            transform: scale(0);
+            opacity: 0;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                        opacity 0.2s ease,
+                        background 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
-        #info {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            font-size: 18px;
-            color: #333;
+        
+        .ball.active {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        .ball:hover {
+            transform: scale(1.1) !important;
+        }
+        
+        #infoPanel {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-box {
+            background-color: rgba(255,255,255,0.15);
+            padding: 10px 15px;
+            border-radius: 8px;
+            min-width: 120px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+        
+        #progressBar {
+            height: 8px;
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 4px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+        
+        #progressFill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff9a9e 0%, #fad0c4 100%);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        #resultsModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            text-align: center;
+            animation: modalEnter 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        @keyframes modalEnter {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .result-item {
+            margin: 15px 0;
+            padding: 10px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+        
+        #restartBtn {
+            background-color: #fff;
+            color: #764ba2;
+            border: none;
+            padding: 12px 25px;
+            margin-top: 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        #restartBtn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
+        .pulse {
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
 <body>
-    <div id="gameArea">
-        <div id="info">Clicca sui pallini!</div>
+    <div class="container">
+        <h1>⚡ Reaction Time Challenge ⚡</h1>
+        
+        <div id="infoPanel">
+            <div class="stat-box">
+                <div class="stat-label">Tempo attuale</div>
+                <div id="currentTime" class="stat-value">- ms</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Media</div>
+                <div id="averageTime" class="stat-value">- ms</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Cliccati</div>
+                <div id="clickCount" class="stat-value">0/100</div>
+            </div>
+        </div>
+        
+        <div id="progressBar">
+            <div id="progressFill"></div>
+        </div>
+        
+        <div id="gameArea"></div>
+    </div>
+    
+    <div id="resultsModal">
+        <div class="modal-content pulse">
+            <h2>🏆 Risultati Finali 🏆</h2>
+            <div class="result-item">
+                <div>Tempo medio di reazione</div>
+                <div id="finalAverage" class="stat-value">- ms</div>
+            </div>
+            <div class="result-item">
+                <div>Tempo più veloce</div>
+                <div id="finalBest" class="stat-value">- ms</div>
+            </div>
+            <div class="result-item">
+                <div>Tempo più lento</div>
+                <div id="finalWorst" class="stat-value">- ms</div>
+            </div>
+            <button id="restartBtn">Rigioca</button>
+        </div>
     </div>
 
     <script>
-        // JavaScript per il gioco
-        let reactionTimes = [];  // Array per raccogliere i tempi di reazione
-        let gameSpeed = 2000; // Intervallo iniziale tra la comparsa dei pallini (in millisecondi)
+        // Variabili del gioco
+        let reactionTimes = [];
+        let gameSpeed = 1500;
         let gameInterval;
         let ballCount = 0;
+        let colors = [
+            'linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%)',
+            'linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%)',
+            'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)',
+            'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
+            'linear-gradient(135deg, #ffc3a0 0%, #ffafbd 100%)'
+        ];
 
-        // Funzione per generare un pallino in una posizione casuale
+        // Elementi DOM
+        const gameArea = document.getElementById('gameArea');
+        const currentTimeDisplay = document.getElementById('currentTime');
+        const averageTimeDisplay = document.getElementById('averageTime');
+        const clickCountDisplay = document.getElementById('clickCount');
+        const progressFill = document.getElementById('progressFill');
+        const resultsModal = document.getElementById('resultsModal');
+        const finalAverage = document.getElementById('finalAverage');
+        const finalBest = document.getElementById('finalBest');
+        const finalWorst = document.getElementById('finalWorst');
+        const restartBtn = document.getElementById('restartBtn');
+
+        // Crea un nuovo pallino
         function createBall() {
             const ball = document.createElement('div');
-            ball.classList.add('ball');
-
-            // Posizione casuale nel contenitore
-            const gameArea = document.getElementById('gameArea');
-            const maxX = gameArea.clientWidth - 50;  // 50px è la dimensione del pallino
-            const maxY = gameArea.clientHeight - 50;
+            ball.className = 'ball';
+            
+            // Posizione casuale
+            const maxX = gameArea.clientWidth - 60;
+            const maxY = gameArea.clientHeight - 60;
             const randomX = Math.floor(Math.random() * maxX);
             const randomY = Math.floor(Math.random() * maxY);
-
+            
+            // Stile casuale
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            const randomSize = 50 + Math.floor(Math.random() * 30);
+            
             ball.style.left = `${randomX}px`;
             ball.style.top = `${randomY}px`;
-
-            // Aggiungere il pallino all'area di gioco
+            ball.style.width = `${randomSize}px`;
+            ball.style.height = `${randomSize}px`;
+            ball.style.background = randomColor;
+            
+            // Aggiungi il numero del pallino
+            ball.textContent = ballCount + 1;
+            
             gameArea.appendChild(ball);
-
-            // Tempo di reazione
+            
+            // Attiva l'animazione dopo un breve ritardo
+            setTimeout(() => {
+                ball.classList.add('active');
+            }, 10);
+            
             const startTime = Date.now();
-
-            // Gestione del click sul pallino
-            ball.addEventListener('click', function () {
+            
+            // Gestione del click
+            ball.addEventListener('click', () => {
                 const reactionTime = Date.now() - startTime;
                 reactionTimes.push(reactionTime);
-
-                // Rimuovere il pallino
-                gameArea.removeChild(ball);
-
-                // Aggiornare la velocità del gioco
-                increaseSpeed();
-
-                // Mostrare il tempo di reazione nell'area di gioco
-                document.getElementById('info').textContent = `Tempo di reazione: ${reactionTime} ms`;
+                ballCount++;
+                
+                // Aggiorna l'interfaccia
+                updateUI(reactionTime);
+                
+                // Animazione al click
+                ball.style.transform = 'scale(1.2)';
+                ball.style.opacity = '0';
+                
+                // Rimuovi il pallino dopo l'animazione
+                setTimeout(() => {
+                    if (gameArea.contains(ball)) {
+                        gameArea.removeChild(ball);
+                    }
+                }, 300);
+                
+                // Controlla se il gioco è finito
+                if (ballCount >= 100) {
+                    stopGame();
+                } else {
+                    // Aumenta la difficoltà
+                    increaseDifficulty();
+                }
             });
+            
+            // Rimuovi il pallino se non viene cliccato
+            setTimeout(() => {
+                if (gameArea.contains(ball)) {
+                    ball.style.opacity = '0';
+                    setTimeout(() => {
+                        if (gameArea.contains(ball)) {
+                            gameArea.removeChild(ball);
+                        }
+                    }, 300);
+                }
+            }, 2000);
         }
-
-        // Funzione per aumentare la velocità del gioco
-        function increaseSpeed() {
-            if (gameSpeed > 500) { // Limita la velocità a non scendere sotto 500 ms
-                gameSpeed -= 100;
+        
+        // Aggiorna l'interfaccia utente
+        function updateUI(currentTime) {
+            currentTimeDisplay.textContent = `${currentTime} ms`;
+            
+            const average = reactionTimes.reduce((a, b) => a + b, 0) / reactionTimes.length;
+            averageTimeDisplay.textContent = `${average.toFixed(0)} ms`;
+            
+            clickCountDisplay.textContent = `${ballCount}/100`;
+            
+            // Aggiorna la barra di progresso
+            progressFill.style.width = `${ballCount}%`;
+        }
+        
+        // Aumenta la difficoltà
+        function increaseDifficulty() {
+            if (gameSpeed > 600) {
+                gameSpeed -= 20;
+                clearInterval(gameInterval);
+                gameInterval = setInterval(createBall, gameSpeed);
             }
         }
-
-        // Funzione per far partire il gioco
+        
+        // Avvia il gioco
         function startGame() {
-            // Avvia l'intervallo che fa apparire i pallini
+            // Resetta le variabili
+            reactionTimes = [];
+            ballCount = 0;
+            gameSpeed = 1500;
+            
+            // Resetta l'interfaccia
+            currentTimeDisplay.textContent = '- ms';
+            averageTimeDisplay.textContent = '- ms';
+            clickCountDisplay.textContent = '0/100';
+            progressFill.style.width = '0%';
+            
+            // Nascondi il modal dei risultati
+            resultsModal.style.display = 'none';
+            
+            // Pulisci l'area di gioco
+            gameArea.innerHTML = '';
+            
+            // Avvia il loop del gioco
             gameInterval = setInterval(createBall, gameSpeed);
         }
-
-        // Funzione per fermare il gioco (ad esempio dopo un certo numero di pallini cliccati)
+        
+        // Termina il gioco
         function stopGame() {
             clearInterval(gameInterval);
-            const avgTime = reactionTimes.reduce((a, b) => a + b, 0) / reactionTimes.length;
-            alert(`Gioco terminato! Tempo medio di reazione: ${avgTime.toFixed(2)} ms`);
+            
+            // Calcola le statistiche
+            const average = reactionTimes.reduce((a, b) => a + b, 0) / reactionTimes.length;
+            const bestTime = Math.min(...reactionTimes);
+            const worstTime = Math.max(...reactionTimes);
+            
+            // Mostra i risultati
+            finalAverage.textContent = `${average.toFixed(0)} ms`;
+            finalBest.textContent = `${bestTime} ms`;
+            finalWorst.textContent = `${worstTime} ms`;
+            
+            resultsModal.style.display = 'flex';
         }
-
-        // Avvio del gioco dopo un breve ritardo
-        setTimeout(startGame, 1000);
-
-        // Stop del gioco dopo 30 secondi
-        setTimeout(stopGame, 30000);
+        
+        // Listener per il pulsante di riavvio
+        restartBtn.addEventListener('click', startGame);
+        
+        // Avvia il gioco all'inizio
+        startGame();
     </script>
 </body>
 </html>
