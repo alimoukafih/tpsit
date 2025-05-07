@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- Configurazione base della pagina -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slot Machine</title>
+    <style>
+        /* Stili CSS per l'interfaccia grafica */
+        body { font-family: 'Arial', sans-serif; text-align: center; background: url('https://img.freepik.com/free-photo/green-poker-table-background_87414-3611.jpg') center/cover no-repeat fixed; color: gold; }
+        /* ... (altri stili rimangono invariati) ... */
+    </style>
+</head>
+<body>
+    <!-- Intestazione e struttura della slot machine -->
+    <h1>SLOT MACHINE</h1>
+    <div class="slot-machine">
+        <!-- Pannello info crediti e puntata -->
+        <div class="info"> Credito: <span id="credits">100</span> € | Puntata: <span id="bet">5</span> € </div>
+        
+        <!-- Controlli per modificare la puntata -->
+        <div class="bet-controls">
+            <button class="bet-btn" id="decrease-bet">-</button>
+            <button class="bet-btn" id="increase-bet">+</button>
+        </div>
+        
+        <!-- Griglia delle slot (4x4) -->
+        <div class="slots">
+            <!-- 16 slot, inizialmente tutte con 🍒 -->
+            <div class="slot">🍒</div>
+            <!-- ... (altre 15 slot) ... -->
+        </div>
+        
+        <!-- Pulsanti di gioco -->
+        <button id="spin">GIRARE!</button>
+        <button id="play-again" style="display:none">GIOCA ANCORA</button>
+        
+        <!-- Area risultati -->
+        <div class="info" id="result">Pronto a giocare!</div>
+    </div>
+
+    <script>
+        // SIMBOLI E VINCITE ================================
+        // Simboli con probabilità aumentate per i più paganti
+        const symbols = ['🍒', '🍒', '🍒', '🍋', '🍋', '🍊', '🍊', '⭐', '⭐', '🔔', '🔔', '7'];
+        
+        // Tabella vincite (combinazione: moltiplicatore)
+        const payouts = {
+            '7,7,7,7': 20,       // Jackpot
+            '🔔,🔔,🔔,🔔': 15,  // Combinazioni da 4
+            // ... (altre combinazioni) ...
+            '🍒,🍒,🍒': 2        // Vincite minori da 3
+        };
+
+        // VARIABILI GLOBALI =================================
+        const slots = document.querySelectorAll('.slot');
+        let credits = 100;        // Credito iniziale
+        let bet = 5;              // Puntata base
+        let isSpinning = false;   // Flag per evitare giocate multiple
+
+        // FUNZIONI PRINCIPALI ===============================
+        function spin() {
+            if (isSpinning || credits < bet) return;
+            
+            isSpinning = true;
+            credits -= bet;       // Sottrai la puntata
+            updateUI();
+            
+            // Animazione di rotazione
+            slots.forEach(slot => slot.classList.add('spinning'));
+            
+            setTimeout(() => {
+                // Assegna simboli casuali (con probabilità modificate)
+                slots.forEach(slot => {
+                    const rand = Math.random();
+                    if (rand < 0.1) slot.textContent = '7';      // 10% probabilità
+                    else if (rand < 0.2) slot.textContent = '🔔'; // 10%
+                    // ... (altri simboli) ...
+                    else slot.textContent = '🍒';               // 35%
+                });
+                
+                checkWin();      // Controlla eventuali vincite
+                isSpinning = false;
+                updateUI();
+            }, 1000);
+        }
+
+        function checkWin() {
+            // Tutte le possibili linee vincenti (4 righe, 4 colonne, 2 diagonali + combinazioni da 3)
+            const lines = [
+                [0,1,2,3], [4,5,6,7],  // Prime due righe
+                // ... (altre linee) ...
+                [0,1,2], [1,2,3]       // Combinazioni da 3
+            ];
+            
+            let win = 0;
+            
+            // Controlla ogni linea possibile
+            lines.forEach(line => {
+                const combo = line.map(i => slots[i].textContent).join(',');
+                if (payouts[combo]) {
+                    win += bet * payouts[combo]; // Calcola la vincita
+                    // Evidenzia le slot vincenti
+                    line.forEach(i => slots[i].style.boxShadow = '0 0 15px gold');
+                }
+            });
+            
+            // Gestione risultato
+            if (win > 0) {
+                credits += win;
+                showResult(`HAI VINTO!<span class="win-amount">+${win} €</span>`, 'win');
+            } else {
+                showResult('Hai perso! Riprova!', 'lose');
+            }
+        }
+
+        // FUNZIONI AUSILIARIE ==============================
+        function updateUI() {
+            // Aggiorna display crediti/puntata e abilita/disabilita pulsanti
+            document.getElementById('credits').textContent = credits;
+            document.getElementById('bet').textContent = bet;
+            spinBtn.disabled = credits < bet || isSpinning;
+        }
+
+        function showResult(message, type) {
+            // Mostra messaggio con stile appropriato (vittoria/sconfitta)
+            resultDiv.className = `info ${type}`;
+            resultDiv.innerHTML = message;
+        }
+
+        // EVENT LISTENERS ===================================
+        document.getElementById('spin').addEventListener('click', spin);
+        document.getElementById('play-again').addEventListener('click', () => {
+            if (credits === 0) credits = 50; // Ricarica se crediti esauriti
+            updateUI();
+        });
+        // ... (altri event listeners) ...
+
+        updateUI(); // Inizializza l'interfaccia
+    </script>
+</body>
+</html>
