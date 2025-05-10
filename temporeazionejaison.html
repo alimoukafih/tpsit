@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reaction Time Challenge</title>
+    <style>
+        /* [Tutti gli stili CSS precedenti rimangono uguali] */
+        
+        /* Aggiungi questo nuovo stile per il pulsante di download */
+        #downloadBtn {
+            background-color: #fff;
+            color: #764ba2;
+            border: none;
+            padding: 12px 25px;
+            margin-top: 10px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: none; /* Inizialmente nascosto */
+        }
+        
+        #downloadBtn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- [Tutto il contenuto HTML precedente rimane uguale] -->
+    </div>
+    
+    <div id="resultsModal">
+        <div class="modal-content pulse">
+            <h2>🏆 Risultati Finali 🏆</h2>
+            <div class="result-item">
+                <div>Tempo medio di reazione</div>
+                <div id="finalAverage" class="stat-value">- ms</div>
+            </div>
+            <div class="result-item">
+                <div>Tempo più veloce</div>
+                <div id="finalBest" class="stat-value">- ms</div>
+            </div>
+            <div class="result-item">
+                <div>Tempo più lento</div>
+                <div id="finalWorst" class="stat-value">- ms</div>
+            </div>
+            <button id="restartBtn">Rigioca</button>
+            <button id="downloadBtn">Scarica Risultati (JSON)</button>
+        </div>
+    </div>
+
+    <script>
+        // [Tutte le variabili e funzioni precedenti rimangono uguali fino a stopGame()]
+        
+        // Termina il gioco
+        function stopGame() {
+            clearInterval(gameInterval);
+            
+            // Calcola le statistiche
+            const average = reactionTimes.reduce((a, b) => a + b, 0) / reactionTimes.length;
+            const bestTime = Math.min(...reactionTimes);
+            const worstTime = Math.max(...reactionTimes);
+            
+            // Mostra i risultati
+            finalAverage.textContent = `${average.toFixed(0)} ms`;
+            finalBest.textContent = `${bestTime} ms`;
+            finalWorst.textContent = `${worstTime} ms`;
+            
+            // Mostra il pulsante di download
+            document.getElementById('downloadBtn').style.display = 'inline-block';
+            
+            resultsModal.style.display = 'flex';
+        }
+        
+        // Funzione per scaricare i risultati come JSON
+        function downloadResults() {
+            // Crea l'oggetto con i risultati
+            const results = {
+                date: new Date().toISOString(),
+                reactionTimes: reactionTimes,
+                averageTime: reactionTimes.reduce((a, b) => a + b, 0) / reactionTimes.length,
+                bestTime: Math.min(...reactionTimes),
+                worstTime: Math.max(...reactionTimes),
+                totalClicks: reactionTimes.length
+            };
+            
+            // Converti in JSON
+            const jsonData = JSON.stringify(results, null, 2);
+            
+            // Crea un blob e un URL per il download
+            const blob = new Blob([jsonData], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            // Crea un link temporaneo per il download
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `reaction_results_${new Date().toISOString().slice(0, 10)}.json`;
+            document.body.appendChild(a);
+            a.click();
+            
+            // Pulisci
+            setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 100);
+        }
+        
+        // Listener per il pulsante di riavvio
+        restartBtn.addEventListener('click', () => {
+            document.getElementById('downloadBtn').style.display = 'none';
+            startGame();
+        });
+        
+        // Listener per il pulsante di download
+        document.getElementById('downloadBtn').addEventListener('click', downloadResults);
+        
+        // Avvia il gioco all'inizio
+        startGame();
+    </script>
+</body>
+</html>
